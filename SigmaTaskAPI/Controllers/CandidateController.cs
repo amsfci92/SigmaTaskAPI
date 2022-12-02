@@ -52,12 +52,14 @@ namespace SigmaTaskAPI.Controllers
                 result.Succeeded = false;
                 result.Errors.Add(new Error { Message = $"Close the CSV file. {io.Message }" });
                 isInternalServerError = true;
+                _logger.Log(LogLevel.Error, io.Message);
             }
             catch (Exception ex)
             {
                 result.Succeeded = false;
                 result.Errors.Add(new Error { Message = ex.Message });
                 isInternalServerError = true;
+                _logger.Log(LogLevel.Error, ex.Message);
             }
 
             if(isInternalServerError)
