@@ -21,6 +21,10 @@ namespace SigmaTaskAPI.DAL
 
         public async Task LoadCSVDataAsync()
         {
+            if (!File.Exists(_csvFilePath))
+            {
+                await File.Create(_csvFilePath).DisposeAsync();
+            }
 
             var lines =  File.ReadAllLines(_csvFilePath);
 
