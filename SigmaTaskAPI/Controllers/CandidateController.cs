@@ -18,14 +18,28 @@ namespace SigmaTaskAPI.Controllers
             _candidateService = candidateService;
         }
 
-        [HttpGet(Name = "InsertUpdate")]
-        public async Task<ActionResult> InsertOrUpdate(CandidateModel candidateModel)
+
+        /// <summary>
+        /// Insert ot update candidate
+        /// </summary>
+        /// <param name="candidateModel">The candidate data.</param>
+        /// <response code="400">BadRequest - returned if any validation issue happened.</response>
+        /// <response code="404">Not found - either because the asset doesn't exist or isn't available to the user.</response>
+        /// <response code="500">Internal Server Error</response>
+        [Route("InsertOrUpdate")]
+        [ResponseCache(Duration = 30)]
+        [Produces(typeof(Result))]
+        [HttpPost]
+        public async Task<ActionResult<Result>> InsertOrUpdate(CandidateModel candidateModel)
         {
             var result = new Result();
+            var isInternalServerError = false;
+
             if (candidateModel == null || !ModelState.IsValid)
             {
                 result.Succeeded = false;
                 result.Errors = ModelState.Select(m => new Error { Message = $"{m.Key} => {m.Value}" }).ToList();
+                
                 return BadRequest(result);
             }
             try
@@ -37,19 +51,26 @@ namespace SigmaTaskAPI.Controllers
             {
                 result.Succeeded = false;
                 result.Errors.Add(new Error { Message = $"Close the CSV file. {io.Message }" });
+                isInternalServerError = true;
             }
             catch (Exception ex)
             {
                 result.Succeeded = false;
                 result.Errors.Add(new Error { Message = ex.Message });
+                isInternalServerError = true;
             }
 
-            if (result.Succeeded)
+            if(isInternalServerError)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, result);
+            }
+            else if (result.Succeeded)
             {
                 return Ok(result);
             }
             else
             {
+
                 return BadRequest(result);
             }
 

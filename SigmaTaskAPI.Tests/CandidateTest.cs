@@ -142,7 +142,7 @@ namespace SigmaTaskAPI.Tests
             var result = await candidateController.InsertOrUpdate(candidate);
              
             // Assert 
-            Assert.IsTrue(result is BadRequestObjectResult);
+            Assert.IsTrue(result.Result is BadRequestObjectResult);
         }
 
         [TestMethod]
@@ -170,7 +170,7 @@ namespace SigmaTaskAPI.Tests
             var result = await candidateController.InsertOrUpdate(candidate);
 
             // Assert 
-            Assert.IsTrue(result is OkObjectResult);
+            Assert.IsTrue(result.Result is OkObjectResult);
         }
     }
 }
