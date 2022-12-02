@@ -24,8 +24,8 @@ namespace SigmaTaskAPI.Controllers
         /// </summary>
         /// <param name="candidateModel">The candidate data.</param>
         /// <response code="400">BadRequest - returned if any validation issue happened.</response>
-        /// <response code="404">Not found - either because the asset doesn't exist or isn't available to the user.</response>
         /// <response code="500">Internal Server Error</response>
+        /// <response code="200">Candidate created or updated successfully</response>
         [Route("InsertOrUpdate")]
         [ResponseCache(Duration = 30)]
         [Produces(typeof(Result))]
