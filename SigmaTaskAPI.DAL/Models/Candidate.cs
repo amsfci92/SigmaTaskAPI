@@ -14,7 +14,7 @@ namespace SigmaTaskAPI.DAL.Models
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
 
-        public TimeOnly? AvailableContactTime { get; set; }
+        public string TimeInterval { get; set; }
         public string LinkedIn { get; set; }
         public string GitHub { get; set; }
         public string Comment { get; set; }

@@ -10,13 +10,14 @@ namespace SigmaTaskAPI.BLL.DtoModels
     public class CandidateModel
     {
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
-        public TimeOnly? AvailableContactTime { get; set; }
+        public string TimeInterval { get; set; }
         public string LinkedIn { get; set; }
         public string GitHub { get; set; }
         [Required]

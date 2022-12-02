@@ -30,16 +30,14 @@ namespace SigmaTaskAPI.DAL
                 for (int i = 1; i < lines.Length; i++)
                 {
                     var dataRow = lines[i].Split(',');
-                    var availableTimeValid = TimeOnly.TryParse(dataRow[4], out TimeOnly availableTime);
-
+                    
                     var candidate = new Candidate
                     {
                         Email = dataRow[0],
                         FirstName = dataRow[1],
                         LastName = dataRow[2],
                         PhoneNumber = dataRow[3],
-
-                        AvailableContactTime = availableTimeValid ? availableTime : null,    
+                        TimeInterval = dataRow[3], 
                         LinkedIn = dataRow[5],    
                         GitHub = dataRow[6],
                         Comment = dataRow[7],

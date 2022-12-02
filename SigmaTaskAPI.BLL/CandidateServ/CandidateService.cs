@@ -28,7 +28,7 @@ namespace SigmaTaskAPI.BLL.CandidateServ
                 _context.Candidates.Add(new DAL.Models.Candidate
                 {
                     Email = candidateModel.Email,
-                    AvailableContactTime = candidateModel.AvailableContactTime,
+                    TimeInterval = candidateModel.TimeInterval,
                     Comment = candidateModel.Comment,
                     FirstName = candidateModel.FirstName,
                     GitHub = candidateModel.GitHub,
@@ -42,7 +42,7 @@ namespace SigmaTaskAPI.BLL.CandidateServ
             else
             {
                 foundCandidate.Email = candidateModel.Email;
-                foundCandidate.AvailableContactTime = candidateModel.AvailableContactTime;
+                foundCandidate.TimeInterval = candidateModel.TimeInterval;
                 foundCandidate.Comment = candidateModel.Comment;
                 foundCandidate.FirstName = candidateModel.FirstName;
                 foundCandidate.GitHub = candidateModel.GitHub;
