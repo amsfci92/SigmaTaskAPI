@@ -21,12 +21,12 @@ namespace SigmaTaskAPI.DAL
 
         public async Task LoadCSVDataAsync()
         {
-            var fileDir = Directory.CreateDirectory(Path.GetDirectoryName(_csvFilePath));
+            var fileDir = Path.GetDirectoryName(_csvFilePath);
             var lines = new List<string>();
 
-            if (fileDir != null && !fileDir.Exists)
+            if (!string.IsNullOrWhiteSpace(fileDir) && !Directory.Exists(fileDir))
             {
-                Directory.CreateDirectory(fileDir.FullName);
+                Directory.CreateDirectory(fileDir);
             }
 
             if (!File.Exists(_csvFilePath))
