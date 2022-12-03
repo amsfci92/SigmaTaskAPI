@@ -59,7 +59,6 @@ namespace SigmaTaskAPI.BLL.CandidateServ
             if (saveResult)
             {
                 result.Succeeded = true;
-                var rr = _context.Candidates.ToList().FirstOrDefault(m => m.Email == "string1422");
             }
             else
             {

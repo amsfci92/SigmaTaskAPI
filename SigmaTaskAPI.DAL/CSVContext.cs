@@ -21,17 +21,26 @@ namespace SigmaTaskAPI.DAL
 
         public async Task LoadCSVDataAsync()
         {
+            var fileDir = Directory.CreateDirectory(Path.GetDirectoryName(_csvFilePath));
+            var lines = new List<string>();
+
+            if (fileDir != null && !fileDir.Exists)
+            {
+                Directory.CreateDirectory(fileDir.FullName);
+            }
+
             if (!File.Exists(_csvFilePath))
             {
                 await File.Create(_csvFilePath).DisposeAsync();
             }
-
-            var lines =  File.ReadAllLines(_csvFilePath);
-
-
-            if (lines.Length > 0)
+            else
             {
-                for (int i = 1; i < lines.Length; i++)
+                lines = File.ReadAllLines(_csvFilePath).ToList();
+            }
+
+            if (lines.Count > 0)
+            {
+                for (int i = 1; i < lines.Count; i++)
                 {
                     var dataRow = lines[i].Split(',');
                     
@@ -56,13 +65,11 @@ namespace SigmaTaskAPI.DAL
         public async Task<bool> SaveChanges()
         {
             if (Candidates.Any())
-            { 
-                    var columnNames = GetCSVHeader();
-                    var csvFormatValues = Candidates.Select(candidate => $"{candidate.ToCSVString()}").ToList();
+            {
+                var columnNames = GetCSVHeader();
+                var csvFormatValues = Candidates.Select(candidate => $"{candidate.ToCSVString()}").ToList();
 
-                    var fullCSVContent = $"{columnNames}\r\n{string.Join("\r\n", csvFormatValues)}";
-
-                    //await File.WriteAllTextAsync($"{_csvFilePath}", fullCSVContent);
+                var fullCSVContent = $"{columnNames}\r\n{string.Join("\r\n", csvFormatValues)}";
 
                 using (FileStream fileStream = new FileStream(
                       _csvFilePath,

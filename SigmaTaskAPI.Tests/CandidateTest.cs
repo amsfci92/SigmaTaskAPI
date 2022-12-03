@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SigmaTaskAPI.BLL.CandidateServ;
@@ -121,8 +122,9 @@ namespace SigmaTaskAPI.Tests
         public async Task CheckCandidateControllerWithInValidModelStateAsync()
         {
             // Arrange 
-            var candidateService = new CandidateService(new DAL.CSVContext(filePath));
-            var candidateController = new CandidateController(null, candidateService);
+            var candidateService = new CandidateService(new DAL.CSVContext(filePath)); 
+            var logger = new Logger<CandidateController>(new LoggerFactory());
+            var candidateController = new CandidateController(logger, candidateService);
 
             candidateController.ModelState.AddModelError("Email", "Missing Email");
 
@@ -150,7 +152,8 @@ namespace SigmaTaskAPI.Tests
         {
             // Arrange 
             var candidateService = new CandidateService(new DAL.CSVContext(filePath));
-            var candidateController = new CandidateController(null, candidateService);
+            var logger = new Logger<CandidateController>(new LoggerFactory());
+            var candidateController = new CandidateController(logger, candidateService);
 
             candidateController.ModelState.Clear();
 
